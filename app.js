@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const exspress = require('express');
 
 const { taskControllers } = require('./controllers');
-const { validate } = require('./middleware');
+const { validate, errorHandlers } = require('./middleware');
 
 const app = exspress();
 
@@ -17,5 +17,5 @@ app.patch(
   taskControllers.updateTasks
 );
 app.delete('/tasks/:id', taskControllers.removeTask);
-
+app.use(errorHandlers.validationErrorHandler, errorHandlers.errorHandler);
 module.exports = app;
